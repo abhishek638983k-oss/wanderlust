@@ -1,0 +1,9 @@
+.justify-content-center {
+    padding: 30px;
+}
+.show-card {
+    max-width: 800px;
+}
+.show-img {
+    min-height: 70vh;
+}

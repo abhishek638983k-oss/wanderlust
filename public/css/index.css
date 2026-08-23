@@ -1,0 +1,33 @@
+main {
+    padding: 40px 25px;
+}
+.col {
+    transition: all 300ms ease-in-out;
+}
+.col:hover {
+    border-radius: 10px;
+    box-shadow: -5px 5px 5px rgba(167, 166, 166, 0.43);
+}
+.card {
+    border: none;
+    flex-grow: 1;
+}
+.card-img-top {
+    height: 18rem;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 0.5rem;
+}
+.price {
+    color: #ff385c;
+}
+.card-img-overlay {
+    opacity: 0;
+}
+.card-img-overlay:hover {
+    opacity: 0.2;
+    background-color: rgb(255, 254, 254);
+}
+body {
+    position: relative;
+}
