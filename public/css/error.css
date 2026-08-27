@@ -1,0 +1,14 @@
+.error-container {
+    min-height: 100vh;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.error-box {
+    min-height: 100px;
+    min-width: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

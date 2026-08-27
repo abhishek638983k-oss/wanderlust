@@ -7,3 +7,8 @@
 .show-img {
     min-height: 70vh;
 }
+
+body {
+    min-height: 100vh;
+    position: relative;
+}

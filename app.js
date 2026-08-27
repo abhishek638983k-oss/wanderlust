@@ -5,10 +5,12 @@ import path from "path";
 import methodOverride from "method-override";
 import { fileURLToPath } from "url";
 import ejsmate from "ejs-mate";
+import wrapAsync from "./utils/wrapAsync.js";
+import ExpressError from "./utils/ExpressError.js";
+import { validateListing } from "./ListingSchema.js";
 
 const app = express();
-const MONGO_URL =
-    "mongodb://admin:Abhi6389%40@127.0.0.1:27017/wanderlust?authSource=wanderlust";
+const MONGO_URL = "mongodb://127.0.0.1:27017/wonderlust";
 
 main()
     .then(() => {
@@ -33,15 +35,18 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 app.use(express.static(path.join(__dirname, "public")));
 app.get("/", (req, res) => {
-    res.send("Hi, I am root");
+    res.redirect("/listings");
 });
 
 //Index Route
-app.get("/listings", async (req, res) => {
-    const allListings = await Listing.find({});
-    const title = "Home";
-    res.render("listings/index.ejs", { title, allListings });
-});
+app.get(
+    "/listings",
+    wrapAsync(async (req, res) => {
+        const allListings = await Listing.find({});
+        const title = "Home";
+        res.render("listings/index.ejs", { title, allListings });
+    }),
+);
 
 //New Route
 app.get("/listings/new", (req, res) => {
@@ -49,40 +54,73 @@ app.get("/listings/new", (req, res) => {
 });
 
 //Show Route
-app.get("/listings/:id", async (req, res) => {
-    let { id } = req.params;
-    const listing = await Listing.findById(id);
-    const title = "Detailed Listing";
-    res.render("listings/show.ejs", { title, listing });
-});
+app.get(
+    "/listings/:id",
+    wrapAsync(async (req, res) => {
+        let { id } = req.params;
+        const listing = await Listing.findById(id);
+        const title = "Detailed Listing";
+        res.render("listings/show.ejs", { title, listing });
+    }),
+);
 
 //Create Route
-app.post("/listings", async (req, res) => {
-    console.log(req.body);
-    const newListing = new Listing(req.body.listing);
-    await newListing.save();
-    res.redirect("/listings");
-});
+app.post(
+    "/listings",
+    validateListing,
+    wrapAsync(async (req, res, next) => {
+        listingSchema.validate(req.body);
+        const newListing = new Listing(req.body.listing);
+        await newListing.save();
+        res.redirect("/listings");
+    }),
+);
 
 //Edit Route
-app.get("/listings/:id/edit", async (req, res) => {
-    let { id } = req.params;
-    const listing = await Listing.findById(id);
-    res.render("listings/edit.ejs", { listing, title: "Edit Your Listing" });
-});
+app.get(
+    "/listings/:id/edit",
+    wrapAsync(async (req, res) => {
+        let { id } = req.params;
+        const listing = await Listing.findById(id);
+        res.render("listings/edit.ejs", {
+            listing,
+            title: "Edit Your Listing",
+        });
+    }),
+);
 
 //Update Route
-app.put("/listings/:id", async (req, res) => {
-    let { id } = req.params;
-    await Listing.findByIdAndUpdate(id, { ...req.body.listing });
-    res.redirect(`/listings/${id}`);
-});
+app.put(
+    "/listings/:id",
+    validateListing,
+    wrapAsync(async (req, res) => {
+        let { id } = req.params;
+        await Listing.findByIdAndUpdate(id, { ...req.body.listing });
+        res.redirect(`/listings/${id}`);
+    }),
+);
 
 //Delete Route
-app.delete("/listings/:id", async (req, res) => {
-    let { id } = req.params;
-    let deletedListing = await Listing.findByIdAndDelete(id);
-    res.redirect("/listings");
+app.delete(
+    "/listings/:id",
+    wrapAsync(async (req, res) => {
+        let { id } = req.params;
+        let deletedListing = await Listing.findByIdAndDelete(id);
+        res.redirect("/listings");
+    }),
+);
+
+app.all("*", (req, res, next) => {
+    next(new ExpressError(404, "page not found"));
+});
+
+app.use((err, req, res, next) => {
+    const status = err.status ?? err.statusCode ?? 500;
+    res.status(status).render("listings/error.ejs", {
+        title: "ERROR",
+        err,
+        status,
+    });
 });
 
 app.listen(8080, () => {

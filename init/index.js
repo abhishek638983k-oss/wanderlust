@@ -2,8 +2,7 @@ import mongoose from "mongoose";
 import Listing from "../models/listing.js";
 import { sampleListings } from "./data.js";
 
-const MONGO_URL =
-    "mongodb://admin:Abhi6389%40@127.0.0.1:27017/wanderlust?authSource=wanderlust";
+const MONGO_URL = "mongodb://127.0.0.1:27017/wonderlust";
 
 async function main() {
     await mongoose.connect(MONGO_URL);
