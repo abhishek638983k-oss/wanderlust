@@ -1,14 +1,101 @@
+/* Error Page Container */
 .error-container {
-    min-height: 100vh;
-    width: 100vw;
+    min-height: 70vh;
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
+    padding: 2rem 1rem;
+    background-color: #ff5a5f;
 }
+
+/* Custom error card styling */
 .error-box {
-    min-height: 100px;
-    min-width: 200px;
+    width: 100%;
+    max-width: 650px;
+    padding: 2rem;
+    margin: 0;
+
+    background-color: #ffffff;
+    color: #333333;
+
+    border: none;
+    border-radius: 16px;
+
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    text-align: center;
+}
+
+/* Error content */
+.error-content {
     display: flex;
-    align-items: center;
+    flex-wrap: wrap;
     justify-content: center;
+    align-items: center;
+    gap: 0.4rem;
+
+    margin-bottom: 1.5rem;
+    font-size: 1.1rem;
+}
+
+/* Status code */
+.error-status {
+    color: #ff5a5f;
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+/* Separator */
+.error-separator {
+    color: #ff5a5f;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+/* Error message */
+.error-message {
+    color: #444444;
+    font-size: 1.1rem;
+}
+
+/* Home link */
+.error-home-link {
+    display: inline-block;
+    padding: 0.7rem 1.4rem;
+
+    background-color: #ff5a5f;
+    color: #ffffff !important;
+
+    border-radius: 8px;
+    text-decoration: none;
+
+    font-weight: 600;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        background-color 0.2s ease;
+}
+
+.error-home-link:hover {
+    background-color: #e84e53;
+    color: #ffffff !important;
+
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(255, 90, 95, 0.35);
+}
+
+/* Mobile responsiveness */
+@media (max-width: 576px) {
+    .error-box {
+        padding: 1.5rem 1rem;
+    }
+
+    .error-content {
+        flex-direction: column;
+        gap: 0.2rem;
+    }
+
+    .error-status {
+        font-size: 1.75rem;
+    }
 }

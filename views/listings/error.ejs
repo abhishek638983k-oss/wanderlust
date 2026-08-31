@@ -1,6 +1,17 @@
 <% layout('layouts/boilerplate') -%>
+
 <div class="error-container">
     <div class="alert alert-danger error-box" role="alert">
-        <strong><%= status %></strong>: <%= err.message %>. : <a class="alert-link" href="/listings"> Home</a>
+        <div class="error-content">
+            <strong class="error-status"><%= status %></strong>
+
+            <span class="error-separator">:</span>
+
+            <span class="error-message"> <%= err.message %> </span>
+        </div>
+
+        <a class="alert-link error-home-link" href="/listings">
+            ← Back to Home
+        </a>
     </div>
 </div>
