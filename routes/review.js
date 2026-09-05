@@ -4,10 +4,13 @@ import Review from "../models/review.js";
 import wrapAsync from "../utils/wrapAsync.js";
 import { reviewPri, validateReview } from "../ReviewSchema.js";
 import ExpressError from "../utils/ExpressError.js";
+import { authenticat, isReviewOwner } from "../middlewares/authenticate.js";
 const router = express.Router({ mergeParams: true });
 
 router.get(
     "/:reviewId/edit",
+    authenticat,
+    isReviewOwner,
     wrapAsync(async (req, res, next) => {
         const { id, reviewId } = req.params;
         const review = await Review.findById(reviewId);
@@ -39,6 +42,7 @@ router.get(
 // Create Review Route
 router.post(
     "/",
+    authenticat,
     reviewPri,
     validateReview,
     wrapAsync(async (req, res, next) => {
@@ -58,7 +62,7 @@ router.post(
         await Listing.findByIdAndUpdate(req.body.for, {
             $push: { reviews: newReview._id },
         });
-
+        req.flash("success", "Review Added Succesfully!");
         res.status(201).redirect(`/listings/${req.body.for}`);
     }),
 );
@@ -66,6 +70,9 @@ router.post(
 // Update Review Route
 router.put(
     "/:reviewId",
+    authenticat,
+    isReviewOwner,
+    reviewPri,
     validateReview,
     wrapAsync(async (req, res, next) => {
         const { id, reviewId } = req.params;
@@ -82,13 +89,15 @@ router.put(
                 new ExpressError(404, `Review with id ${id} doesn't exist`),
             );
         }
-
+        req.flash("success", "Review Edited Succesfully!");
         res.status(200).redirect(`/listings/${id}`);
     }),
 );
 
 router.delete(
     "/:reviewId",
+    authenticat,
+    isReviewOwner,
     wrapAsync(async (req, res, next) => {
         const { id, reviewId } = req.params;
         const result = await Review.findByIdAndDelete(reviewId);
@@ -99,6 +108,7 @@ router.delete(
         await Listing.findByIdAndUpdate(id, {
             $pull: { reviews: reviewId },
         });
+        req.flash("success", "Review Deleted Succesfully!");
         res.status(200).redirect(`/listings/${id}`);
     }),
 );

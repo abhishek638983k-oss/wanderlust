@@ -4,22 +4,14 @@
     <!-- 1. Your Original Listing Card (Kept completely intact) -->
     <div class="d-flex justify-content-center show-listing-container">
         <div class="card show-card" style="width: 18rem">
+            <div class="card-body mt-0 p-0"> <h1 class="card-title"><%= listing.title %></h1></div>
             <img
             loading="lazy"
                 src="<%= listing.image %>"
                 class="card-img-top show-img"
                 alt="<%= listing.title %>" />
-            <div class="card-body">
-                <h5 class="card-title"><%= listing.title %></h5>
-                <p class="card-text"><%= listing.description %></p>
-            </div>
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item"><%= listing.country %></li>
-                <li class="list-group-item"><%= listing.location %></li>
-                <li class="list-group-item" style="color: #ff385c">
-                    ₹ <%= listing.price.toLocaleString("en-IN") %>
-                </li>
-            </ul>
+ <%  if (currentUser && listing.owner._id.equals(currentUser._id)) { %>
+ 
             <div class="card-body d-sm-flex gap-3">
                 <a
                     href="/listings/<%= listing._id %>/edit"
@@ -35,6 +27,25 @@
                     </button>
                 </form>
             </div>
+
+<% } else { %>
+
+     <div class="card-body">
+         <h3 class="card-text">@<%= listing.owner.username %></h3>
+     </div>
+
+    <% } %>
+            <div class="card-body">
+                <p class="card-text"><%= listing.description %></p>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><%= listing.country %></li>
+                <li class="list-group-item"><%= listing.location %></li>
+                <li class="list-group-item" style="color: #ff385c">
+                    ₹ <%= listing.price.toLocaleString("en-IN") %>
+                </li>
+            </ul>
+
         </div>
     </div>
 
@@ -61,6 +72,8 @@
 
         <!-- Leave a New Review -->
 
+
+        <% if(currentUser && !currentUser._id.equals(listing.owner._id)){ %>
 <div class="card p-4 mb-4 shadow-sm border-0 bg-light">
 
 <h5 class="mb-3 card-title text-secondary">Leave a Review</h5>
@@ -145,8 +158,9 @@
 
 </form>
 
-</div>
 
+</div>
+<% } %>
 <script>
     (() => {
         "use strict";
@@ -179,10 +193,10 @@
                                 <div class="d-flex align-items-center mb-2">
                                     <img 
                                         src="<%= review.avatar %>" 
-                                        alt="@<%= review.username %>" 
+                                        alt="@<%= review.owner.username %>" 
                                         class="rounded-circle me-2 border border-2" 
                                         style="width: 36px; height: 36px; object-fit: cover;" />
-                                    <h6 class="card-subtitle mb-0 text-dark fw-bold small">@<%= review.username %></h6>
+                                    <h6 class="card-subtitle mb-0 text-dark fw-bold small">@<%= review.owner.username %></h6>
                                 </div>
                                 
                                 <!-- Star Display Representation Row -->
@@ -202,6 +216,7 @@
                                 <p class="card-text text-secondary small mb-3">"<%= review.content %>"</p>
                                 
                                 <!-- Action Management Control Row (Edit & Delete Buttons) -->
+                                <% if(currentUser && review.owner && review.owner._id.equals(currentUser._id)){ %>
                                 <div class="d-flex gap-2 border-top pt-2 justify-content-end">
                                     <!-- Edit Trigger Button (Routes to your review put method placeholder) -->
                                     <a 
@@ -220,6 +235,7 @@
                                         </button>
                                     </form>
                                 </div>
+                                <% } %>
 
                             </div>
                         </div>

@@ -1,0 +1,59 @@
+<% layout('layouts/boilerplate') -%>
+
+<div class="col-8 offset-2 min-vh-100 form-container">
+    <form
+        method="post"
+        action="/auth/signup"
+        class="needs-validation"
+        novalidate>
+        <div class="mb-3">
+            <label for="email" class="form-label">Email:</label>
+            <input
+                placeholder="Enter Email"
+                name="email"
+                type="email"
+                class="form-control"
+                id="email"
+                required />
+
+            <div class="valid-feedback">Looks good!</div>
+            <div class="invalid-feedback">Please provide a valid Email</div>
+        </div>
+
+        <!-- Username -->
+        <div class="mb-3">
+            <label for="username" class="form-label">Username:</label>
+            <input
+                name="username"
+                type="text"
+                placeholder="Enter Username"
+                class="form-control"
+                id="username"
+                minlength="5"
+                maxlength="50"
+                required />
+
+            <div class="invalid-feedback">Please Enter a valid Username</div>
+        </div>
+
+        <!-- Password -->
+        <div class="mb-3">
+            <label for="password" class="form-label">Password:</label>
+            <input
+                placeholder="Enter Password"
+                name="password"
+                minlength="5"
+                maxlength="20"
+                type="password"
+                class="form-control"
+                id="password"
+                required />
+            <div class="invalid-feedback">Please Enter a valid Password</div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Signup/Register</button>
+        <a href="/auth/login" class="link-primary">Login</a>
+    </form>
+</div>
+
+<script src="/js/new.js"></script>

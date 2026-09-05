@@ -1,12 +1,31 @@
 import Joi from "joi";
 import ExpressError from "./utils/ExpressError.js";
 import { faker } from "@faker-js/faker";
-
+import mongoose from "mongoose";
+import Listing from "./models/listing.js";
 // 1. Define the Joi Schema
 export const reviewSchema = Joi.object({
     content: Joi.string().min(10).max(200).required(),
 
-    username: Joi.string().trim().required(),
+    owner: Joi.any()
+        .custom((value, helpers) => {
+            // If it's a native Mongoose/MongoDB ObjectId object instance
+            if (
+                value &&
+                typeof value === "object" &&
+                mongoose.Types.ObjectId.isValid(value)
+            ) {
+                return value.toString();
+            }
+            // If it's already a 24-character hexadecimal string
+            if (typeof value === "string" && /^[0-9a-fA-F]{24}$/.test(value)) {
+                return value;
+            }
+            return helpers.message(
+                '"listing.owner" must be a valid MongoDB ObjectId',
+            );
+        })
+        .required(),
 
     stars: Joi.number().min(1).max(5).required(),
 
@@ -36,10 +55,17 @@ export const validateReview = (req, res, next) => {
     next();
 };
 
-export const reviewPri = (req, res, next) => {
-    req.body.username = faker.internet.username();
+export const reviewPri = async (req, res, next) => {
+    const currListing = await Listing.findById(req.params.id);
+    if (
+        currListing &&
+        currListing.owner._id.equals(res.locals.currentUser._id)
+    ) {
+        req.flash("error", "Cant add Reviewes to Your Own Lisgings");
+        return res.redirect(`/listings/${req.params.id}`);
+    }
     req.body.avatar = faker.image.avatar();
     req.body.for = req.params.id;
-
+    req.body.owner = res.locals.currentUser._id;
     next();
 };

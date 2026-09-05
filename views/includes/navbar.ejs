@@ -19,7 +19,8 @@
         <!-- Filters -->
         <div class="filters-container header-sections">
             <div
-                class="header-filters border-bottom border-dark border-2 hide-border">
+                class="header-filters border-bottom border-dark border-2 hide-border"
+                id="home-page">
                 <a href="/listings">
                     <i class="fa-sharp fa-solid fa-check-double"></i>
                     <span>All</span>
@@ -43,7 +44,8 @@
             </div>
 
             <div
-                class="header-filters border-bottom border-dark border-2 hide-border">
+                class="header-filters border-bottom border-dark border-2 hide-border"
+                id="newListing-page">
                 <a href="/listings/new">
                     <i class="fa-sharp fa-solid fa-star-of-life"></i>
                     <span>New</span>
@@ -53,11 +55,13 @@
 
         <!-- Menu -->
         <div class="menu-container header-sections">
-            <div class="region-lang d-none d-md-block">
-                <i class="fa-solid fa-earth-asia"></i>
-            </div>
+            <a>
+                <div class="menu">
+                    <i class="fa-solid fa-earth-asia"></i>
+                </div>
+            </a>
 
-            <div class="menu">
+            <div class="menu" id="menuToggle">
                 <i class="fa-solid fa-bars"></i>
             </div>
         </div>

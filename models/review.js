@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import User from "./users.js";
 const Schema = mongoose.Schema;
 
 const reviewSchema = new Schema({
@@ -8,10 +9,9 @@ const reviewSchema = new Schema({
         minLength: 10,
         maxLength: 200,
     },
-    username: {
-        type: String,
-        trim: true,
-        required: true,
+    owner: {
+        type: Schema.Types.ObjectId,
+        ref: User,
     },
     stars: {
         type: Number, // <-- CRITICAL: Always declare the type!

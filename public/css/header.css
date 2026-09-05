@@ -1,7 +1,6 @@
 /* =========================
    Header
 ========================= */
-
 header {
     position: sticky;
     top: 0;
@@ -138,10 +137,10 @@ header {
 
 /* Active/current style */
 
-.header-filters:first-child a {
+/* .header-filters:first-child a {
     color: #ff5a5f;
     background-color: rgba(255, 90, 95, 0.1);
-}
+} */
 
 /* =========================
    Menu Section

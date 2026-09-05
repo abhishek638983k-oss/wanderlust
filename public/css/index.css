@@ -7,6 +7,7 @@ main {
 .col:hover {
     border-radius: 10px;
     box-shadow: -5px 5px 5px rgba(167, 166, 166, 0.43);
+    transform: translate(3px, -3px);
 }
 .card {
     border: none;
