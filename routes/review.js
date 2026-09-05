@@ -4,12 +4,12 @@ import Review from "../models/review.js";
 import wrapAsync from "../utils/wrapAsync.js";
 import { reviewPri, validateReview } from "../ReviewSchema.js";
 import ExpressError from "../utils/ExpressError.js";
-import { authenticat, isReviewOwner } from "../middlewares/authenticate.js";
+import { authenticate, isReviewOwner } from "../middlewares/authenticate.js";
 const router = express.Router({ mergeParams: true });
 
 router.get(
     "/:reviewId/edit",
-    authenticat,
+    authenticate,
     isReviewOwner,
     wrapAsync(async (req, res, next) => {
         const { id, reviewId } = req.params;
@@ -42,7 +42,7 @@ router.get(
 // Create Review Route
 router.post(
     "/",
-    authenticat,
+    authenticate,
     reviewPri,
     validateReview,
     wrapAsync(async (req, res, next) => {
@@ -70,7 +70,7 @@ router.post(
 // Update Review Route
 router.put(
     "/:reviewId",
-    authenticat,
+    authenticate,
     isReviewOwner,
     reviewPri,
     validateReview,
@@ -96,7 +96,7 @@ router.put(
 
 router.delete(
     "/:reviewId",
-    authenticat,
+    authenticate,
     isReviewOwner,
     wrapAsync(async (req, res, next) => {
         const { id, reviewId } = req.params;

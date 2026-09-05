@@ -2,18 +2,18 @@ import express from "express";
 import Listing from "../models/listing.js";
 import wrapAsync from "../utils/wrapAsync.js";
 import { validateListing } from "../ListingSchema.js";
-import { authenticat, isOwner } from "../middlewares/authenticate.js";
+import { authenticate, isOwner } from "../middlewares/authenticate.js";
 let router = express.Router();
 
 //New Route
-router.get("/new", authenticat, (req, res) => {
+router.get("/new", authenticate, (req, res) => {
     res.render("listings/new.ejs", { title: "New Listing" });
 });
 
 //Edit Route
 router.get(
     "/:id/edit",
-    authenticat,
+    authenticate,
     isOwner,
     wrapAsync(async (req, res) => {
         let { id } = req.params;
@@ -56,7 +56,7 @@ router.get(
 //Create Listing Route
 router.post(
     "/",
-    authenticat,
+    authenticate,
     (req, res, next) => {
         req.body.listing.owner = res.locals.currentUser._id;
         console.log(req.body.listing);
@@ -76,8 +76,12 @@ router.post(
 //Update Listing Route
 router.put(
     "/:id",
-    authenticat,
+    authenticate,
     isOwner,
+    (req, res, next) => {
+        req.body.listing.owner = res.locals.currentUser._id;
+        next();
+    },
     validateListing,
     wrapAsync(async (req, res) => {
         let { id } = req.params;
@@ -97,7 +101,7 @@ router.put(
 //Delete Listing Route
 router.delete(
     "/:id",
-    authenticat,
+    authenticate,
     isOwner,
     wrapAsync(async (req, res) => {
         let { id } = req.params;

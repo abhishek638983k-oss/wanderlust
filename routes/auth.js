@@ -70,7 +70,8 @@ router.post(
     }),
     wrapAsync(async (req, res) => {
         const username = req.body.username;
-        req.flash("success", `Welcome to Wonderlust @${username}`);
+        req.flash("success", `Welcome to Wanderlust @${username}`);
+        delete req.session.redirectURL;
         res.redirect(res.locals.redirectURL || "/listings");
     }),
 );

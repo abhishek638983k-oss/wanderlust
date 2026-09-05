@@ -1,7 +1,7 @@
 import Listing from "../models/listing.js";
 import Review from "../models/review.js";
 
-export const authenticat = async (req, res, next) => {
+export const authenticate = async (req, res, next) => {
     if (!req.isAuthenticated()) {
         req.session.redirectURL = req.originalUrl;
         req.flash("error", "signup or login required");
@@ -27,8 +27,10 @@ export const isOwner = async (req, res, next) => {
 };
 
 export const isReviewOwner = async (req, res, next) => {
-    const currRevirwe = await Review.findById(req.params.reviewId);
-    if (!currRevirwe.owner._id.equals(res.locals.currentUser._id)) {
+    const currReview = await Review.findById(req.params.reviewId).populate(
+        "owner",
+    );
+    if (!currReview.owner._id.equals(res.locals.currentUser._id)) {
         req.flash("error", "This action is not allowed!");
         return res.redirect(`/listings/${req.params.id}`);
     }
