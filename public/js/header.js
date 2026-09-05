@@ -20,6 +20,4 @@ const actionsByTitle = {
 
 if (currentTitle in actionsByTitle) {
     actionsByTitle[currentTitle]();
-} else {
-    console.log("No specific action mapped for trimmed title:", currentTitle);
 }

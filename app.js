@@ -20,10 +20,6 @@ await connectDB();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-let chek = (req, res, next) => {
-    console.log("review req recived");
-    next();
-};
 
 const sessionOptions = {
     secret: "abhishek",
