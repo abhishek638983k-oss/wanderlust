@@ -23,10 +23,7 @@ const reviewSchema = new Schema({
         // Option B: Uncomment enum below if you ONLY want whole numbers (1, 2, 3, 4, 5)
         // enum: { values:, message: '{VALUE} is not a valid rating' }
     },
-    avatar: {
-        type: String,
-        required: true,
-    },
+
     for: {
         type: Schema.Types.ObjectId,
         ref: "Listing",

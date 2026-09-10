@@ -29,9 +29,6 @@ export const reviewSchema = Joi.object({
 
     stars: Joi.number().min(1).max(5).required(),
 
-    // Use .uri() to ensure faker's avatar URL is valid
-    avatar: Joi.string().uri().required(),
-
     // Validates that this is a 24-character hex MongoDB ID
     for: Joi.string()
         .regex(/^[0-9a-fA-F]{24}$/)
@@ -64,7 +61,6 @@ export const reviewPri = async (req, res, next) => {
         req.flash("error", "Cant add Reviewes to Your Own Lisgings");
         return res.redirect(`/listings/${req.params.id}`);
     }
-    req.body.avatar = faker.image.avatar();
     req.body.for = req.params.id;
     req.body.owner = res.locals.currentUser._id;
     next();

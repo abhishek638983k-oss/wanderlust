@@ -8,6 +8,11 @@ const userSchema = new Schema({
         required: true,
         unique: true,
     },
+    avatar: {
+        type: String,
+        required: true,
+        immutable: true,
+    },
 });
 userSchema.plugin(passportLocalMongoose.default);
 const User = mongoose.model("User", userSchema);

@@ -2,6 +2,7 @@ import express from "express";
 import User from "../models/users.js";
 import wrapAsync from "../utils/wrapAsync.js";
 import passport from "passport";
+import { faker } from "@faker-js/faker";
 import { saveRedirectURL } from "../middlewares/authenticate.js";
 let router = express.Router();
 
@@ -22,7 +23,8 @@ router.get("/signup", (req, res) => {
 router.post(
     "/signup",
     wrapAsync(async (req, res) => {
-        const { username, email, password } = req.body;
+        req.body.avatar = faker.image.avatar();
+        const { username, email, password, avatar } = req.body;
 
         const existingUser = await User.findOne({
             $or: [{ username }, { email }],
@@ -40,7 +42,7 @@ router.post(
             }
         }
 
-        const newuser = new User({ email, username });
+        const newuser = new User({ email, username, avatar });
 
         const registeruser = await User.register(newuser, password);
 

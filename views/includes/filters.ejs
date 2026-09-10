@@ -1,0 +1,313 @@
+<style>
+  .filter-wanderlust-panel {
+    position: sticky;
+    top: 82px;
+    z-index: 1020;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    margin: 0 auto 1.1rem;
+    background: rgba(255, 255, 255, 0.94);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(15, 23, 42, 0.04);
+    overflow: hidden;
+    contain: layout paint;
+    padding-bottom: 0;
+  }
+
+  .filter-wanderlust-panel:not(.open) {
+    width: auto;
+    max-width: max-content;
+    margin: 0 0 1rem auto;
+    background: transparent;
+    border: none;
+    overflow: visible;
+    display: inline-block;
+  }
+
+  .filter-wanderlust-row {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    padding: 0.45rem 0.75rem 0.5rem;
+  }
+
+  .filter-wanderlust-panel:not(.open) .filter-wanderlust-row {
+    justify-content: flex-end;
+    width: auto;
+    max-width: max-content;
+    padding: 0;
+    margin: 0;
+    gap: 0;
+  }
+
+  .filter-wanderlust-content {
+    flex: 1 1 auto;
+    min-width: 0;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  .filter-wanderlust-panel:not(.open) .filter-wanderlust-content,
+  .filter-wanderlust-panel:not(.open) .filter-wanderlust-scroll-shell,
+  .filter-wanderlust-panel:not(.open) .filter-wanderlust-bar,
+  .filter-wanderlust-panel:not(.open) .filter-wanderlust-wrap {
+    display: none !important;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .filter-wanderlust-scroll-shell {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+  }
+
+  .filter-wanderlust-scroll-shell::-webkit-scrollbar {
+    display: none;
+  }
+
+  .filter-wanderlust-scroll-shell {
+    padding-bottom: 0.15rem;
+  }
+
+  .filter-wanderlust-bar {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+    min-width: max-content;
+    padding: 0.15rem 0 0.2rem;
+    white-space: nowrap;
+  }
+
+  .filter-wanderlust-wrap {
+    position: relative; /* FIX: confines the hidden checkbox's positioning
+                            context to its own pill, instead of letting it
+                            resolve against a distant ancestor and trigger
+                            a browser scroll-correction on click/focus */
+    flex: 0 0 auto;
+    display: inline-flex;
+    min-width: 0;
+  }
+
+  .filter-wanderlust-wrap .btn-check + .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    min-width: max-content;
+    flex-shrink: 0;
+    border: 1px solid rgba(255, 90, 95, 0.28);
+    background: rgba(255, 255, 255, 0.94);
+    color: #ff5a5f;
+    border-radius: 999px;
+    padding: 0.55rem 0.9rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    text-transform: none;
+    transition: all 0.2s ease;
+    box-shadow: none;
+  }
+
+  .filter-wanderlust-wrap .btn-check + .btn:hover {
+    background: rgba(255, 90, 95, 0.05);
+    border-color: rgba(255, 90, 95, 0.5);
+    transform: translateY(-1px);
+  }
+
+  .filter-wanderlust-wrap .btn-check:checked + .btn {
+    background: linear-gradient(135deg, #ff5a5f 0%, #e94a4f 100%);
+    border-color: #ff5a5f;
+    color: #fff;
+    box-shadow: 0 10px 18px rgba(255, 90, 95, 0.2);
+  }
+
+  .filter-wanderlust-wrap .btn-check:focus + .btn {
+    box-shadow: 0 0 0 0.2rem rgba(255, 90, 95, 0.12);
+  }
+
+  .filter-wanderlust-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border: 1px solid rgba(255, 90, 95, 0.2);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.96);
+    color: #ff5a5f;
+    box-shadow: 0 8px 18px rgba(15, 23, 42, 0.04);
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: all 0.2s ease;
+  }
+
+  .filter-wanderlust-toggle:hover {
+    background: rgba(255, 90, 95, 0.04);
+    border-color: rgba(255, 90, 95, 0.4);
+  }
+
+  .filter-wanderlust-toggle i {
+    font-size: 0.8rem;
+    transition: transform 0.2s ease;
+  }
+
+  .filter-wanderlust-panel.open .filter-wanderlust-toggle i {
+    transform: rotate(180deg);
+  }
+
+  .filter-wanderlust-panel:not(.open) .filter-wanderlust-row {
+    padding-right: 0.6rem;
+  }
+
+  @media (max-width: 576px) {
+    .filter-wanderlust-panel {
+      top: 74px;
+      margin-bottom: 0.8rem;
+    }
+
+    .filter-wanderlust-row {
+      gap: 0.45rem;
+      padding: 0.38rem 0.55rem 0.42rem;
+    }
+
+    .filter-wanderlust-toggle {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+    }
+
+    .filter-wanderlust-bar {
+      gap: 0.55rem;
+      padding: 0.1rem 0 0.15rem;
+    }
+
+    .filter-wanderlust-wrap .btn-check + .btn {
+      padding: 0.48rem 0.72rem;
+      font-size: 0.75rem;
+    }
+  }
+</style>
+
+<div class="filter-wanderlust-panel open" aria-label="Filter panel">
+  <div class="filter-wanderlust-row">
+    <div class="filter-wanderlust-content">
+      <div class="filter-wanderlust-scroll-shell">
+        <div class="filter-wanderlust-bar" role="group" aria-label="Tag filter toggle group">
+          <%
+            const ALLOWED_TAGS = [
+             "Trending",
+              "Beachfront",
+              "Cabins",
+
+              "Iconic Cities",
+              "Castles",
+              "Camping",
+              "Amazing Pools",
+              "Farms",
+              "Arctic",
+              "Luxury",
+              "Adventure",
+              "Food & Drink",
+              "Art & Culture",
+              "Nature & Wildlife",
+            ];
+          %>
+
+          <%
+            const selectedTags = Array.isArray(tagArray)
+              ? tagArray.map((tag) => String(tag).trim())
+              : [];
+            const normalizedSelectedTags = new Set(selectedTags.map((tag) => tag.trim()));
+          %>
+
+          <% ALLOWED_TAGS.forEach((tag, index) => { %>
+            <div class="filter-wanderlust-wrap">
+              <input
+                type="checkbox"
+                class="btn-check"
+                id="filter-<%= index %>"
+                name="tags"
+                value="<%= tag %>"
+                autocomplete="off"
+                <% if (normalizedSelectedTags.has(tag.trim())) { %>checked<% } %>
+              />
+              <label class="btn" for="filter-<%= index %>">
+                <%= tag %>
+              </label>
+            </div>
+          <% }); %>
+        </div>
+      </div>
+    </div>
+
+    <button class="filter-wanderlust-toggle" id="filter-togler" type="button" aria-expanded="true">
+      <i class="fa-solid fa-chevron-down"></i>
+    </button>
+  </div>
+</div>
+
+<script>
+  (function () {
+    const panel = document.querySelector('.filter-wanderlust-panel');
+    if (!panel) return;
+
+    const toggle = panel.querySelector('.filter-wanderlust-toggle');
+    const shell = panel.querySelector('.filter-wanderlust-scroll-shell');
+
+    if (toggle) {
+      toggle.addEventListener('click', function () {
+        const isOpen = panel.classList.toggle('open');
+        toggle.setAttribute('aria-expanded', String(isOpen));
+
+        if (!isOpen && shell) {
+          shell.scrollLeft = 0;
+        }
+      });
+    }
+
+    if (shell) {
+      shell.addEventListener(
+        'wheel',
+        function (event) {
+          if (Math.abs(event.deltaY) > Math.abs(event.deltaX)) {
+            const canScroll = shell.scrollWidth > shell.clientWidth;
+            if (canScroll) {
+              event.preventDefault();
+              shell.scrollLeft += event.deltaY;
+            }
+          }
+        },
+        { passive: false }
+      );
+    }
+  })();
+
+  document.querySelectorAll('input[name="tags"]').forEach((element) => {
+    element.addEventListener('click', () => {
+      // Safety-net on top of the position:relative fix above: lock the
+      // scroll position through this tick so no residual browser
+      // scroll-into-view can move the bar under the user.
+      const shell = document.querySelector('.filter-wanderlust-scroll-shell');
+      const scrollLeft = shell ? shell.scrollLeft : 0;
+      if (shell) {
+        requestAnimationFrame(() => {
+          shell.scrollLeft = scrollLeft;
+        });
+      }
+    });
+  });
+</script>
+<script src="/js/filters.js"></script>

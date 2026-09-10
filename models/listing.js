@@ -2,6 +2,23 @@ import mongoose from "mongoose";
 import Review from "./review.js";
 const Schema = mongoose.Schema;
 
+const ALLOWED_TAGS = [
+    "Beachfront",
+    "Cabins",
+    "Trending",
+    "Iconic Cities",
+    "Castles",
+    "Camping",
+    "Amazing Pools",
+    "Farms",
+    "Arctic",
+    "Luxury",
+    "Adventure",
+    "Food & Drink",
+    "Art & Culture",
+    "Nature & Wildlife",
+];
+
 const listingSchema = new Schema({
     title: {
         type: String,
@@ -9,13 +26,14 @@ const listingSchema = new Schema({
     },
     description: String,
     image: {
-        type: String,
-        default:
-            "https://images.unsplash.com/photo-1625505826533-5c80aca7d157?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fGdvYXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60",
-        set: (v) =>
-            v === ""
-                ? "https://images.unsplash.com/photo-1625505826533-5c80aca7d157?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fGdvYXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60"
-                : v,
+        filename: {
+            type: String,
+            required: true,
+        },
+        url: {
+            type: String,
+            required: true,
+        },
     },
     price: Number,
     location: String,
@@ -30,6 +48,22 @@ const listingSchema = new Schema({
             ref: "Review",
         },
     ],
+    type: {
+        type: String,
+        enum: ["experience", "stay"],
+        required: true,
+        immutable: true,
+    },
+    // Allows an array containing multiple valid tags
+    tags: [
+        {
+            type: String,
+            enum: {
+                values: ALLOWED_TAGS,
+                message: "{VALUE} is not a supported tag layout.",
+            },
+        },
+    ],
 });
 
 listingSchema.post("findOneAndDelete", async function (doc) {
@@ -37,6 +71,7 @@ listingSchema.post("findOneAndDelete", async function (doc) {
         await Review.deleteMany({ _id: { $in: doc.reviews } });
     }
 });
+
 const Listing = mongoose.model("Listing", listingSchema);
 
 export default Listing;

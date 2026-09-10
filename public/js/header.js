@@ -13,9 +13,10 @@ function filterUnderline(currFilter) {
 }
 
 const actionsByTitle = {
-    "New Listing": () =>
-        filterUnderline(document.getElementById("newListing-page")),
-    Home: () => filterUnderline(document.getElementById("home-page")),
+    experience: () =>
+        filterUnderline(document.getElementById("experienceListing")),
+    Home: () => filterUnderline(document.getElementById("allListing")),
+    stay: () => filterUnderline(document.getElementById("stayListing")),
 };
 
 if (currentTitle in actionsByTitle) {

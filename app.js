@@ -1,3 +1,10 @@
+// import dotenv from "dotenv";
+// const environment = process.env.NODE_ENV || "development";
+
+// if (environment !== "production") {
+//     dotenv.config();
+// }
+
 import express from "express";
 import path from "path";
 import methodOverride from "method-override";
@@ -39,6 +46,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 app.use(express.static(path.join(__dirname, "public")));
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use(session(sessionOptions));
 app.use(flash());
 
@@ -51,19 +59,10 @@ passport.use(new LocalStrategy(User.authenticate()));
 // use static serialize and deserialize of model for passport session support
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
-//root route
+
 app.get("/", (req, res) => {
     res.redirect("/listings");
 });
-
-// app.get("/demo", async (req, res) => {
-//     const fakeUser = new User({
-//         email: "abhi@gmail.com",
-//         username: "abhi",
-//     });
-//     const result = await User.register(fakeUser, "abhi");
-//     res.send(result);
-// });
 
 app.use((req, res, next) => {
     res.locals.success = req.flash("success");

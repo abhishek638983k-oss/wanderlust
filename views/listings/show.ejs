@@ -4,10 +4,10 @@
     <!-- 1. Your Original Listing Card (Kept completely intact) -->
     <div class="d-flex justify-content-center show-listing-container">
         <div class="card show-card" style="width: 18rem">
-            <div class="card-body mt-0 p-0"> <h1 class="card-title"><%= listing.title %></h1></div>
+            <div class="card-body mt-0 p-0 "> <h1 class="card-title"><%= listing.title %></h1></div>
             <img
             loading="lazy"
-                src="<%= listing.image %>"
+                src="<%= listing.image.url %>"
                 class="card-img-top show-img"
                 alt="<%= listing.title %>" />
  <%  if (currentUser && listing.owner._id.equals(currentUser._id)) { %>
@@ -32,6 +32,9 @@
 
      <div class="card-body">
          <h3 class="card-text">@<%= listing.owner.username %></h3>
+         <% listing.tags.forEach(tag => { %>
+          <span class="badge text-bg-info"> <%= tag %> </span>
+         <% }) %>
      </div>
 
     <% } %>
@@ -192,7 +195,7 @@
                                 
                                 <div class="d-flex align-items-center mb-2">
                                     <img 
-                                        src="<%= review.avatar %>" 
+                                        src="<%= review.owner.avatar || 'https://cdn.jsdelivr.net/gh/faker-js/assets-person-portrait/male/512/52.jpg'%>" 
                                         alt="@<%= review.owner.username %>" 
                                         class="rounded-circle me-2 border border-2" 
                                         style="width: 36px; height: 36px; object-fit: cover;" />

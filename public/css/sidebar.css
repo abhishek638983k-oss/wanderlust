@@ -4,89 +4,84 @@
     padding: 8px;
 }
 
-/* Sidebar */
 .sidebar {
     position: fixed;
     top: 0;
-    right: -280px;
-
-    width: 280px;
+    right: -300px;
+    width: 300px;
     height: 100vh;
-
-    background: #fff;
+    background: linear-gradient(180deg, #ffffff 0%, #fff7f7 100%);
     z-index: 1050;
-
-    transition: left 0.3s ease;
-
-    box-shadow: 3px 0 15px rgba(0, 0, 0, 0.15);
+    transition: right 0.3s ease;
+    box-shadow: -18px 0 35px rgba(15, 23, 42, 0.12);
+    border-left: 1px solid rgba(17, 24, 39, 0.05);
 }
 
-/* Sidebar open */
 .sidebar.active {
     right: 0;
 }
 
-/* Header */
 .sidebar-header {
-    height: 70px;
-
+    height: 72px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-
     padding: 0 20px;
-
-    border-bottom: 1px solid #dee2e6;
+    border-bottom: 1px solid rgba(17, 24, 39, 0.08);
+    background: rgba(255, 90, 95, 0.04);
 }
 
 .sidebar-header h5 {
     margin: 0;
+    color: #ff5a5f;
+    font-weight: 800;
+    letter-spacing: -0.04em;
 }
 
-/* Sidebar body */
 .sidebar-body {
-    padding: 15px;
+    padding: 18px 16px;
 }
 
 .sidebar .nav-link {
-    color: #333;
-
-    padding: 12px 15px;
-
-    border-radius: 8px;
-
-    transition: background 0.2s ease;
+    color: #374151;
+    padding: 12px 14px;
+    border-radius: 12px;
+    font-weight: 600;
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
 }
 
 .sidebar .nav-link:hover {
-    background: #f1f1f1;
+    background: rgba(255, 90, 95, 0.08);
+    color: #ff5a5f;
+    transform: translateX(2px);
 }
 
-/* Overlay */
+.sidebar .btn-close {
+    border-radius: 50%;
+    opacity: 1;
+    background-color: rgba(17, 24, 39, 0.04);
+}
+
 .sidebar-overlay {
     position: fixed;
-
     inset: 0;
-
-    background: rgba(0, 0, 0, 0.4);
-
+    background: rgba(15, 23, 42, 0.42);
     z-index: 1040;
-
     opacity: 0;
     visibility: hidden;
-
     transition:
         opacity 0.3s ease,
         visibility 0.3s ease;
 }
 
-/* Overlay when sidebar is open */
 .sidebar-overlay.active {
     opacity: 1;
     visibility: visible;
 }
 
-/* Prevent page scrolling */
 body.sidebar-open {
     overflow: hidden;
 }

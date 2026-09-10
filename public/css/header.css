@@ -6,38 +6,43 @@ header {
     top: 0;
     left: 0;
     z-index: 1030;
-
-    background-color: #ffffff;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+    backdrop-filter: blur(12px);
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 10px 28px rgba(15, 23, 42, 0.05);
+    border-bottom: 1px solid rgba(17, 24, 39, 0.05);
 }
 
-/* Main header layout */
-
+.flash {
+    width: 90%;
+    max-height: 50px;
+    margin: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10px;
+}
+.flash > button {
+    height: 100%;
+    aspect-ratio: 1 /1;
+    margin-right: 30px;
+    padding: 0 !important;
+    outline: none !important;
+}
 .header-container {
     width: 100%;
-    min-height: 72px;
-
+    min-height: 76px;
     display: flex;
     align-items: center;
-
-    padding: 0.7rem 1.5rem;
+    padding: 0.8rem 1.5rem;
     gap: 1rem;
 }
-
-/* General section styling */
 
 .header-sections {
     display: flex;
     align-items: center;
     justify-content: center;
-
     height: 3.5rem;
-    gap: 1.25rem;
+    gap: 1rem;
 }
-
-/* =========================
-   Logo
-========================= */
 
 .logo-link {
     text-decoration: none;
@@ -45,30 +50,24 @@ header {
 
 .logo {
     flex-shrink: 0;
-
     padding: 0.55rem 0.75rem;
-
     color: #ff5a5f;
     background-color: #ffffff;
-
-    border-radius: 10px;
-
-    transition: transform 0.2s ease;
+    border-radius: 14px;
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
 }
 
 .logo:hover {
     transform: scale(1.03);
+    box-shadow: 0 8px 18px rgba(255, 90, 95, 0.12);
 }
-
-/* =========================
-   Filters
-========================= */
 
 .filters-container {
     flex: 1;
     min-width: 0;
-
-    gap: 0.5rem;
+    gap: 0.45rem;
 }
 
 .header-filters {
@@ -77,93 +76,63 @@ header {
     align-items: center;
 }
 
-/* Filter links */
-
 .header-filters a {
-    min-width: 70px;
+    min-width: 72px;
     height: 100%;
-
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-
     gap: 0.25rem;
-
-    padding: 0.4rem 0.8rem;
-
-    color: #555555;
+    padding: 0.45rem 0.85rem;
+    color: #4b5563;
     text-decoration: none;
-
-    border-radius: 10px;
-
+    border-radius: 14px;
     transition:
         color 0.2s ease,
         background-color 0.2s ease,
-        transform 0.2s ease;
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
 }
-
-/* Icons */
 
 .header-filters a i {
     min-width: auto;
-
     color: #ff5a5f;
-
-    font-size: 1.35rem;
-
+    font-size: 1.3rem;
     transition:
         transform 0.2s ease,
         font-size 0.2s ease;
 }
 
-/* Text */
-
 .header-filters a span {
     font-size: 0.78rem;
-    font-weight: 600;
+    font-weight: 700;
 }
-
-/* Hover effect */
 
 .header-filters a:hover {
     color: #ff5a5f;
     background-color: rgba(255, 90, 95, 0.08);
+    box-shadow: inset 0 0 0 1px rgba(255, 90, 95, 0.05);
 }
 
 .header-filters a:hover i {
     transform: translateY(-2px) scale(1.08);
 }
 
-/* Active/current style */
-
-/* .header-filters:first-child a {
-    color: #ff5a5f;
-    background-color: rgba(255, 90, 95, 0.1);
-} */
-
-/* =========================
-   Menu Section
-========================= */
-
 .menu-container {
     flex-shrink: 0;
-    gap: 0.4rem;
+    gap: 0.5rem;
 }
 
 .region-lang,
 .menu {
     width: 44px;
     height: 44px;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     border-radius: 50%;
-
     cursor: pointer;
-
     transition:
         background-color 0.2s ease,
         transform 0.2s ease;
@@ -175,25 +144,28 @@ header {
     transform: translateY(-2px);
 }
 
-.menu-container div i {
-    min-width: auto;
-
-    color: #333333;
-
-    font-size: 1.25rem;
+.useravatar {
+    background: rgba(17, 24, 39, 0.03);
+    border: 1px solid rgba(17, 24, 39, 0.06);
+    padding: 0.35rem 0.7rem;
+    border-radius: 999px;
+    font-weight: 600;
+    color: var(--wanderlust-ink, #1f2937);
 }
 
-/* =========================
-   Utility
-========================= */
+.useravatar:hover {
+    background-color: rgba(255, 90, 95, 0.08);
+}
+
+.menu-container div i {
+    min-width: auto;
+    color: #333333;
+    font-size: 1.25rem;
+}
 
 .hide-border {
     border: 0 !important;
 }
-
-/* =========================
-   Responsive
-========================= */
 
 @media (max-width: 730px) {
     .header-container {

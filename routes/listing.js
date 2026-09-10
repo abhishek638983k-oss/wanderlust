@@ -3,6 +3,7 @@ import wrapAsync from "../utils/wrapAsync.js";
 import { validateListing } from "../ListingSchema.js";
 import { addOwner, addOwnerReviewe } from "../middlewares/addOwner.js";
 import { authenticate, isOwner } from "../middlewares/authenticate.js";
+import { uploadListingImage } from "../middlewares/upload.js";
 
 import {
     newListingForm,
@@ -26,6 +27,7 @@ router
     .put(
         authenticate,
         isOwner,
+        uploadListingImage.single("listing[imageFile]"),
         addOwnerReviewe,
         validateListing,
         wrapAsync(editListing),
@@ -35,6 +37,21 @@ router
 router
     .route("/")
     .get(wrapAsync(allListings))
-    .post(authenticate, addOwner, validateListing, wrapAsync(newListing));
+    .post(
+        authenticate,
+        uploadListingImage.single("listing[imageFile]"),
+        addOwner,
+        (req, res, next) => {
+            if (req.file) {
+                req.body.listing.image = {
+                    filename: req.file.filename,
+                    url: req.file.path,
+                };
+            }
+            next();
+        },
+        validateListing,
+        wrapAsync(newListing),
+    );
 
 export default router;

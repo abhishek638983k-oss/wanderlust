@@ -3,26 +3,28 @@
 ========================= */
 
 .site-footer {
-    background-color: #ffffff;
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.96),
+        rgba(248, 249, 250, 0.96)
+    );
     border-top: 4px solid #ff5a5f;
     color: #333333;
     margin-top: 4rem;
+    box-shadow: 0 -8px 22px rgba(15, 23, 42, 0.03);
 }
-
-/* Brand */
 
 .footer-brand {
     color: #ff5a5f;
-    font-size: 1.8rem;
-    font-weight: 700;
+    font-size: 1.9rem;
+    font-weight: 800;
     text-decoration: none;
+    letter-spacing: -0.04em;
 }
 
 .footer-brand:hover {
     color: #ff5a5f;
 }
-
-/* Description */
 
 .footer-description {
     max-width: 320px;
@@ -30,23 +32,17 @@
     line-height: 1.7;
 }
 
-/* Copyright */
-
 .footer-copyright {
     color: #888888;
     font-size: 0.9rem;
 }
 
-/* Headings */
-
 .footer-heading {
-    color: #333333;
+    color: #1f2937;
     font-size: 1rem;
     font-weight: 700;
     margin-bottom: 1rem;
 }
-
-/* Links */
 
 .footer-links li {
     margin-bottom: 0.7rem;
@@ -62,8 +58,6 @@
     color: #ff5a5f;
 }
 
-/* Social icons */
-
 .footer-socials {
     display: flex;
     gap: 0.8rem;
@@ -72,17 +66,13 @@
 .footer-social-link {
     width: 42px;
     height: 42px;
-
     display: flex;
     justify-content: center;
     align-items: center;
-
-    background-color: #ff5a5f;
+    background: linear-gradient(135deg, #ff5a5f 0%, #e94a4f 100%);
     color: #ffffff;
-
     border-radius: 50%;
     text-decoration: none;
-
     transition:
         transform 0.2s ease,
         box-shadow 0.2s ease;
@@ -91,25 +81,20 @@
 .footer-social-link:hover {
     color: #ffffff;
     transform: translateY(-3px);
-    box-shadow: 0 6px 15px rgba(255, 90, 95, 0.3);
+    box-shadow: 0 8px 16px rgba(255, 90, 95, 0.28);
 }
-
-/* Bottom section */
 
 .footer-bottom {
     border-top: 1px solid #eeeeee;
     color: #777777;
     font-size: 0.9rem;
+    background: rgba(255, 255, 255, 0.6);
 }
-
-/* Heart */
 
 .footer-heart {
     color: #ff5a5f;
     font-size: 1rem;
 }
-
-/* Bottom link */
 
 .footer-home-link {
     color: #ff5a5f;
@@ -121,8 +106,6 @@
     color: #ff5a5f;
     text-decoration: underline;
 }
-
-/* Mobile */
 
 @media (max-width: 767px) {
     .site-footer {

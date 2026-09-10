@@ -20,47 +20,64 @@
         <div class="filters-container header-sections">
             <div
                 class="header-filters border-bottom border-dark border-2 hide-border"
-                id="home-page">
+                id="allListing">
                 <a href="/listings">
-                    <i class="fa-sharp fa-solid fa-check-double"></i>
-                    <span>All</span>
-                </a>
-            </div>
-
-            <div
-                class="header-filters border-bottom border-dark border-2 hide-border">
-                <a href="#">
                     <i class="fa-sharp fa-solid fa-house"></i>
-                    <span>Homes</span>
+                    <span>Home</span>
                 </a>
             </div>
 
             <div
-                class="header-filters border-bottom border-dark border-2 hide-border">
-                <a href="#">
+                class="header-filters border-bottom border-dark border-2 hide-border"  id="stayListing">
+                
+                <a href="/listings?type=stay">
+                    <i class="fa-sharp fa-solid fa-check-double"></i>
+
+                    <span>stay</span>
+                </a>
+            </div>
+
+            <div
+                class="header-filters border-bottom border-dark border-2 hide-border"  id="experienceListing">
+                <a href="/listings?type=experience">
                     <i class="fa-sharp fa-solid fa-person-hiking"></i>
                     <span>Experiences</span>
                 </a>
             </div>
 
-            <div
+            <!-- <div
                 class="header-filters border-bottom border-dark border-2 hide-border"
                 id="newListing-page">
                 <a href="/listings/new">
                     <i class="fa-sharp fa-solid fa-star-of-life"></i>
                     <span>New</span>
                 </a>
-            </div>
+            </div> -->
         </div>
 
         <!-- Menu -->
         <div class="menu-container header-sections">
-            <a>
-                <div class="menu">
-                    <i class="fa-solid fa-earth-asia"></i>
-                </div>
-            </a>
+          <% if(!isLogin){ %>
+            
+            <div class="btn btn-light">
+                <a href="/auth/login" class="nav-link">
+                    <i class="fa-solid fa-right-to-bracket me-2"></i>
+                    Login
+                </a>
+            </div>
+            <% } %>
 
+<%   if(isLogin) { %>
+ <div class=" btn  rounded-pill  useravatar">
+     <img 
+        src="<%= currentUser.avatar || 'https://cdn.jsdelivr.net/gh/faker-js/assets-person-portrait/male/512/52.jpg'%>" 
+        alt="@<%= currentUser.username %>" 
+        class="rounded-circle me-2 border border-2" 
+        style="width: 36px; height: 36px; object-fit: cover;" />
+    <%= currentUser.username %>
+ </div>
+            
+        <% } %>
             <div class="menu" id="menuToggle">
                 <i class="fa-solid fa-bars"></i>
             </div>
